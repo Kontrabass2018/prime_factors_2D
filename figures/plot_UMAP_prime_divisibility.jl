@@ -27,7 +27,8 @@ function prime_factor_div(X, PF)
     return [X % div == 0 for div in PF]
 end 
 
-n = 1_000_000
+# n = 1_000_000
+n = 100_000
 PF = NPrimes(n).P
 d = length(PF)
 # MM = Array{Int64, 2}(undef, (n,d))
@@ -43,7 +44,7 @@ outfile = h5open("Data/NUMBERS/prime_divisibility_$(n).h5", "w")
 outfile["data"] = MM
 close(outfile)
 
-prime_umap = UMAP_(Matrix(MM'), 2;min_dist = 0.7, n_neighbors = 21);
+@time prime_umap = UMAP_(Matrix(MM'), 2;min_dist = 0.7, n_neighbors = 21);
 ## save for later
 outfile = h5open("Data/NUMBERS/UMAP_prime_divisibility_$(n).h5", "w")
 outfile["data"] = prime_umap.embedding
@@ -51,7 +52,7 @@ close(outfile)
 ## plot 
 fig = Figure(size = (1024,1024));
 ax = Axis(fig[1,1], backgroundcolor = :black);
-scatter!(ax, prime_umap.embedding[1,:], prime_umap.embedding[2,:], color = collect(1:n), markersize = 3, colormap=:viridis)
+scatter!(ax, prime_umap.embedding[1,:], prime_umap.embedding[2,:], color = collect(1:n), markersize = 1, colormap=:viridis)
 hidedecorations!(ax)
 hidespines!(ax)
 fig
