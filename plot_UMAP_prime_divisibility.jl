@@ -1,4 +1,4 @@
-include("engines/init.jl")
+include("init.jl")
 
 using Primes
 using Distances
