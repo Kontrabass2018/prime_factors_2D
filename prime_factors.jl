@@ -36,13 +36,12 @@ function load_prime_factors_data(filename)
     return MM
 end 
 
-function get_prime_matrix(;n=100_000, outdir = "Data/NUMBERS")
+function get_prime_matrix(;n=100_000, outdir)
 
     PF = NPrimes(n).P
     d = length(PF)
-    # MM = Array{Int64, 2}(undef, (n,d))
     MM = zeros(n, d)
-    ## 
+
     for i in 1:n
         MM[i,:] = prime_factor_div(i, PF)
         if i % 10_000 == 0
